@@ -2,16 +2,29 @@
 
 import { FormProvider, useForm } from "react-hook-form";
 import { Name } from "./presentations";
+import useSWR from "swr";
 
 export type inputForm = {
   firstName: string;
   lastName: string;
 }
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const Input: React.FC = () => {
   const methods = useForm<inputForm>({
     mode: "onChange"
   })
+
+  const { data, error } = useSWR(`/api/sample`, fetcher, { 
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false
+  })
+  if (error) {
+    console.log("api error!!")
+  }
+  console.log("data:", data)
+  
   return (
     <FormProvider {...methods}>
       <form>
