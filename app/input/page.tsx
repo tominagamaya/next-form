@@ -3,6 +3,7 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { Name } from "./presentations";
 import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 
 export type inputForm = {
   firstName: string;
@@ -16,10 +17,7 @@ const Input: React.FC = () => {
     mode: "onChange"
   })
 
-  const { data, error } = useSWR(`/api/sample`, fetcher, { 
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false
-  })
+  const { data, error } = useSWRImmutable(`/api/sample`, fetcher)
   if (error) {
     console.log("api error!!")
   }
