@@ -5,6 +5,7 @@ import { Name } from "./presentations";
 import useSWRImmutable from "swr/immutable";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Modal } from "../components/Modal";
 
 export type inputForm = {
   firstName: string;
@@ -36,6 +37,7 @@ const Input: React.FC = () => {
   const isSubmit = useRef<boolean>(false);
   const isMoveConfirmed = useRef<boolean>(false);
   const initInputForm = useRef<KeyObject>({})
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   // TODO: 破棄確認オーバーレイを作成する
   const [isDiscardOpen, setIsDiscardOpen] = useState<boolean>(false);
 
@@ -86,25 +88,36 @@ const Input: React.FC = () => {
   }, [])
 
   const onSubmit = (data: inputForm) => {
+    // モーダルを表示
+    setIsModalOpen(true)
+    console.log(isModalOpen)
     console.log(data.firstName)
     console.log(data.lastName)
-    isSubmit.current = true;
-    router.push("/")
+    // isSubmit.current = true;
+    // router.push("/")
   }
   
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">入力画面</h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">登録する情報を入力してください</p>
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <Name />
+    <>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <div className="border-b border-gray-900/10 pb-12">
+            <h2 className="text-base font-semibold leading-7 text-gray-900">入力画面</h2>
+            <p className="mt-1 text-sm leading-6 text-gray-600">登録する情報を入力してください</p>
+            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+              <Name />
+            </div>
           </div>
-        </div>
-        <input type="submit" />
-      </form>
-    </FormProvider>
+          <button 
+            type="submit"
+            className="mt-10 flex items-center justify-center rounded-md border border-transparent bg-green-500 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            送信
+        </button>
+        </form>
+      </FormProvider>
+      {isModalOpen && (<Modal setIsModalOpen={setIsModalOpen} text="送信しますか?"></Modal>)}
+    </>
   )
 }
 
