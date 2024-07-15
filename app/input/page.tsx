@@ -6,6 +6,8 @@ import useSWRImmutable from "swr/immutable";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Modal } from "../components/Modal";
+import styles from "./index.module.css";
+import { Button } from "../components/Button";
 
 export type inputForm = {
   firstName: string;
@@ -102,21 +104,20 @@ const Input: React.FC = () => {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">入力画面</h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">登録する情報を入力してください</p>
+            <h2 className="text-base font-semibold leading-7 text-gray-900">氏名入力</h2>
+            <p className="mt-1 text-sm leading-6 text-gray-600">登録する氏名を入力してください</p>
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <Name />
             </div>
           </div>
-          <button 
-            type="submit"
-            className="mt-10 flex items-center justify-center rounded-md border border-transparent bg-green-500 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            送信
-        </button>
+          <div className={styles.buttonContents}>
+            <Button
+              labelName={"確認"}
+            />
+          </div>
         </form>
       </FormProvider>
-      {isModalOpen && (<Modal setIsModalOpen={setIsModalOpen} text="送信しますか?"></Modal>)}
+      {isModalOpen && (<Modal setIsModalOpen={setIsModalOpen} text="登録しますか?"></Modal>)}
     </>
   )
 }
