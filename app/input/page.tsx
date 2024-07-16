@@ -103,10 +103,10 @@ const Input: React.FC = () => {
     <>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">氏名入力</h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">登録する氏名を入力してください</p>
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div className={styles.container}>
+            <h2 className={styles.title}>氏名入力</h2>
+            <p className={styles.subText}>登録する氏名を入力してください</p>
+            <div className={styles.nameContents}>
               <Name />
             </div>
           </div>
