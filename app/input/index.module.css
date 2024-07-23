@@ -1,3 +1,6 @@
+.container {
+  height: 220px;
+}
 .title {
   font-weight: bold;
   font-size: var(--title-text-size);
