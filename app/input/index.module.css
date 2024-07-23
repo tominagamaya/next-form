@@ -1,11 +1,11 @@
 .title {
   font-weight: bold;
-  font-size: 18px;
+  font-size: var(--title-text-size);
 }
 
 .subText {
-  color: #767171a3;
-  font-size: 14px;
+  color: var(--sub-text-color);
+  font-size: var(--sub-text-size);
   margin-top: 10px;
 }
 

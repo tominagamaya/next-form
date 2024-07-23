@@ -6,6 +6,15 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+ 
+  --error-color: #da3c41;
+  --input-color: #aaaaaa;
+  --input-border-color: #1b2538;
+
+  --sub-text-color: #767171a3;
+  --sub-text-size: 14px;
+  --title-text-size: 18px;
+  --header-text-size: 26px;
 }
 
 @media (prefers-color-scheme: dark) {

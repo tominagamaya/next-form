@@ -4,6 +4,6 @@
 }
 
 .header {
-  font-size: 26px;
+  font-size: var(--header-text-size);
   font-weight: bold;
 }

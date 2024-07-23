@@ -14,18 +14,18 @@
 	padding: 0.3em;
 	transition: 0.3s;
 	letter-spacing: 1px;
-	color: #aaaaaa;
-	border: 1px solid #1b2538;
+	color: var(--input-color);
+	border: 1px solid var(--input-border-color);
 	border-radius: 4px;
   width: 100%;
 }
 .inputLabel input[type='text']:focus {
-	border: 1px solid #da3c41;
+	border: 1px solid var(--error-color);
 	outline: none;
 	box-shadow: 0 0 5px 1px rgba(218,60,65, .5);
 }
 .errorMessage {
-  color: #da3c41;
+  color: var(--error-color);
   font-size: 14px;
   padding-top: 5px;
 }
