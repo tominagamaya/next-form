@@ -98,6 +98,20 @@ const Input: React.FC = () => {
     // isSubmit.current = true;
     // router.push("/")
   }
+
+  /**
+   * 入力内容の登録処理
+   */
+  async function postData(data: inputForm) {
+    const res = await fetch(`/api/input?firstName=${data.firstName}&lastName=${data.lastName}`);
+    const jsonResult = await res.json();
+    console.log("complete:", jsonResult)
+  } 
+
+  const onSubmitComplete = (data: inputForm) => {
+    postData(data);
+    router.push("../");
+  }
   
   return (
     <>
@@ -117,7 +131,12 @@ const Input: React.FC = () => {
           </div>
         </form>
       </FormProvider>
-      {isModalOpen && (<Modal setIsModalOpen={setIsModalOpen} text="登録しますか?"></Modal>)}
+      {isModalOpen && (
+        <Modal 
+          setIsModalOpen={setIsModalOpen}
+          text="登録しますか?"
+          onClick={() => onSubmitComplete(methods.getValues())}
+        ></Modal>)}
     </>
   )
 }

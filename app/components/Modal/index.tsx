@@ -3,16 +3,23 @@ import styles from "./index.module.css"
 
 type Props = {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  text: string
+  text: string;
+  onClick: () => void;
 }
 
-export const Modal: React.FC<Props> = ({setIsModalOpen, text}) => {
+export const Modal: React.FC<Props> = ({setIsModalOpen, text, onClick}) => {
+
+  const submit = () => {
+    onClick();
+    setIsModalOpen(false);
+  }
+  
   return (
     <>
       <div className={styles.overlayContent}>
         <div className={styles.modalContent}>
           <p>{text}</p>
-          <button onClick={() => setIsModalOpen(false)}>OK</button>
+          <button onClick={submit}>OK</button>
         </div>
       </div>
     </>
