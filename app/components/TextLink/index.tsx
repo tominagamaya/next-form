@@ -6,7 +6,7 @@ type Props = {
   onClick: () => void;
 }
 
-export const TextLink: React.FC<Props> = ({name, onClick}) => {
+export const TextLink = ({name, onClick}: Props) => {
   return (
     <div className={`${styles.btn} ${styles.container}`}>
       <a onClick={onClick}>

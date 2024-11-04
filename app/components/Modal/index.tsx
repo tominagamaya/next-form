@@ -7,7 +7,7 @@ type Props = {
   onClick: () => void;
 }
 
-export const Modal: React.FC<Props> = ({setIsModalOpen, text, onClick}) => {
+export const Modal = ({setIsModalOpen, text, onClick}: Props) => {
 
   const submit = () => {
     onClick();

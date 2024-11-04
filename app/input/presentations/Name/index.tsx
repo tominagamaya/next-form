@@ -4,7 +4,7 @@ import { inputForm } from "../../page";
 import styles from "./index.module.css"
 import { InputText } from "@/app/components/InputText";
 
-export const Name: React.FC = () => {
+export const Name = () => {
   const { register, formState: { errors } } = useFormContext<inputForm>()
   return (
     <>

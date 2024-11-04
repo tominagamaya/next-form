@@ -7,7 +7,7 @@ type Props = {
   disabled?: boolean;
 }
 
-export const Button: React.FC<Props> = ({labelName, onClick, disabled = false}) => {
+export const Button = ({labelName, onClick, disabled = false}: Props) => {
   return (
     <div className={styles.container}>
       <button

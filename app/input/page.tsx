@@ -34,7 +34,7 @@ export const isChangedValue = (defaultValues: KeyObject, currentValues: KeyObjec
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const Input: React.FC = () => {
+const Input = () => {
   const router = useRouter();
   const isSubmit = useRef<boolean>(false);
   const initInputForm = useRef<KeyObject>({})
