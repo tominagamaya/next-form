@@ -4,7 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { Name } from "./presentations";
 import useSWRImmutable from "swr/immutable";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Modal } from "../components/Modal";
 import styles from "./index.module.css";
 import { Button } from "../components/Button";
@@ -37,11 +37,10 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const Input: React.FC = () => {
   const router = useRouter();
   const isSubmit = useRef<boolean>(false);
-  const isMoveConfirmed = useRef<boolean>(false);
   const initInputForm = useRef<KeyObject>({})
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  // TODO: 破棄確認オーバーレイを作成する
-  const [isDiscardOpen, setIsDiscardOpen] = useState<boolean>(false);
+ const [isDiscardOpen, setIsDiscardOpen] = useState<boolean>(false);
+  const pathname = usePathname();
 
   const methods = useForm<inputForm>({
     mode: "onBlur"
@@ -53,7 +52,6 @@ const Input: React.FC = () => {
    * 破棄確認モーダルでsubmitしたときの処理
    */
   const discardNextPage = (nextUrl: string) => {
-    isMoveConfirmed.current = true;
     router.push(nextUrl)
   }
 
@@ -62,41 +60,27 @@ const Input: React.FC = () => {
    * 遷移を停止して破棄確認を表示する
    */
   useEffect(() => {
-    const handleRouteChange = (url: string) => {
-      if (isSubmit.current) {
-        // submit時は破棄確認せずに遷移を続行させる
-        return;
-      }
-      if (isMoveConfirmed.current === true || !isChangedValue(initInputForm.current, methods.watch())) {
-        // 自画面の再描画or初期値から値が変更されていない場合は、破棄確認をせずに遷移を続行させる
-        return;
-      }
-      // TODO: isDiscardOpen = true のときに破棄確認を表示させる
-      setIsDiscardOpen(true);
-      // router.events.emit('routeChangeError')
-      throw `aborted`;
+    if (isSubmit.current || !methods.formState.isDirty) {
+      // submit時は破棄確認せずに遷移を続行させる
+      return;
     }
-    // TODO: 使えないので別の方法を試す
-    // router.events.on("routeChangeStart", handleRouteChange)
-    // return () => {
-    //   router.events.off("routeChangeStart", handleRouteChange)
-    // }
+    if (!isChangedValue(initInputForm.current, methods.watch())) {
+      // 自画面の再描画or初期値から値が変更されていない場合は、破棄確認をせずに遷移を続行させる
+      return;
+    }
+    setIsDiscardOpen(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [pathname])
 
   const onSubmit = (data: inputForm) => {
-    // モーダルを表示
-    setIsModalOpen(true)
-    // isSubmit.current = true;
-    // router.push("/")
+   setIsModalOpen(true)
   }
 
   /**
    * 入力内容の登録処理
    */
   async function postData(data: inputForm) {
-    const res = await fetch(`/api/input?firstName=${data.firstName}&lastName=${data.lastName}`);
-    const jsonResult = await res.json();
+    await fetch(`/api/input?firstName=${data.firstName}&lastName=${data.lastName}`);
   } 
 
   const onSubmitComplete = (data: inputForm) => {
@@ -127,6 +111,12 @@ const Input: React.FC = () => {
           setIsModalOpen={setIsModalOpen}
           text="登録しますか?"
           onClick={() => onSubmitComplete(methods.getValues())}
+        ></Modal>)}
+      {isDiscardOpen && (
+        <Modal 
+          setIsModalOpen={setIsModalOpen}
+          text="破棄しますか?"
+          onClick={() => discardNextPage(pathname)}
         ></Modal>)}
     </>
   )
