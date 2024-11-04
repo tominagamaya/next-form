@@ -12,7 +12,12 @@
   color: #525151;
 }
 
-.btn:hover {
+.btn:disabled {
+	background-color: #b7b5b5;
+	color: #8f8e8e;
+}
+
+.btn:hover(:not(.btn:disabled)) {
 	color: #646161;
 	background-color: #ffa500;
 }

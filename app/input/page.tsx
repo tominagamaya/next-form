@@ -44,7 +44,7 @@ const Input: React.FC = () => {
   const [isDiscardOpen, setIsDiscardOpen] = useState<boolean>(false);
 
   const methods = useForm<inputForm>({
-    mode: "onChange"
+    mode: "onBlur"
   })
 
   const { data, error } = useSWRImmutable(`https://jsonplaceholder.typicode.com/posts/1`, fetcher)
@@ -112,7 +112,6 @@ const Input: React.FC = () => {
     postData(data);
     router.push("../");
   }
-  
   return (
     <>
       <FormProvider {...methods}>
@@ -127,6 +126,7 @@ const Input: React.FC = () => {
           <div className={styles.buttonContents}>
             <Button
               labelName={"確認"}
+              disabled={!methods.formState.isValid || !methods.formState.isDirty || methods.formState.isSubmitting}
             />
           </div>
         </form>
