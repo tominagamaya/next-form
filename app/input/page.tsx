@@ -1,7 +1,7 @@
 'use client'
 
 import { FormProvider, useForm } from "react-hook-form";
-import { Name } from "./presentations";
+import { Name } from "./presentations/Name";
 import useSWRImmutable from "swr/immutable";
 import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";

@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { inputForm } from "../page";
+import { inputForm } from "../../page";
 import styles from "./index.module.css"
 
 export const Name: React.FC = () => {
