@@ -48,11 +48,6 @@ const Input: React.FC = () => {
   })
 
   const { data, error } = useSWRImmutable(`https://jsonplaceholder.typicode.com/posts/1`, fetcher)
-  if (error) {
-    console.log("api error!!")
-  } else {
-    console.log("data:", data)
-  }
 
   /**
    * 破棄確認モーダルでsubmitしたときの処理
@@ -92,9 +87,6 @@ const Input: React.FC = () => {
   const onSubmit = (data: inputForm) => {
     // モーダルを表示
     setIsModalOpen(true)
-    console.log(isModalOpen)
-    console.log(data.firstName)
-    console.log(data.lastName)
     // isSubmit.current = true;
     // router.push("/")
   }
@@ -105,7 +97,6 @@ const Input: React.FC = () => {
   async function postData(data: inputForm) {
     const res = await fetch(`/api/input?firstName=${data.firstName}&lastName=${data.lastName}`);
     const jsonResult = await res.json();
-    console.log("complete:", jsonResult)
   } 
 
   const onSubmitComplete = (data: inputForm) => {
