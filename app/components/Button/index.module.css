@@ -1,23 +1,28 @@
 .container {
-	width: 100%;
+  width: 100%;
 }
 
 .btn {
-	width: 250px;
-	height: 50px;
-	background-color: #fdb736;
-	border-radius: 35px;
-	box-shadow: 2px 2px 4px gray;
-	font-weight: 700;
+  width: 250px;
+  height: 50px;
+  background-color: #fdb736;
+  border-radius: 35px;
+  box-shadow: 2px 2px 4px gray;
+  font-weight: 700;
   color: #525151;
+
+  &.small {
+	width: 150px;
+	height: 30px;
+  }
 }
 
 .btn:disabled {
-	background-color: #b7b5b5;
-	color: #8f8e8e;
+  background-color: #b7b5b5;
+  color: #8f8e8e;
 }
 
 .btn:hover(:not(.btn:disabled)) {
-	color: #646161;
-	background-color: #ffa500;
+  color: #646161;
+  background-color: #ffa500;
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./index.module.css"
+import { Button } from "../Button";
 
 type Props = {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,8 +19,8 @@ export const Modal = ({setIsModalOpen, text, onClick}: Props) => {
     <>
       <div className={styles.overlayContent}>
         <div className={styles.modalContent}>
-          <p>{text}</p>
-          <button onClick={submit}>OK</button>
+          <p className={styles.text}>{text}</p>
+          <Button labelName={"OK"} variant="small" onClick={submit} />
         </div>
       </div>
     </>

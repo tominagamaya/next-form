@@ -109,7 +109,7 @@ const Input = () => {
       {isModalOpen && (
         <Modal 
           setIsModalOpen={setIsModalOpen}
-          text="登録しますか?"
+          text="登録しますか？"
           onClick={() => onSubmitComplete(methods.getValues())}
         ></Modal>)}
       {isDiscardOpen && (
