@@ -2,9 +2,8 @@
 
 import { FormProvider, useForm } from "react-hook-form";
 import { Name } from "./presentations/Name";
-import useSWRImmutable from "swr/immutable";
-import { useEffect, useRef, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Modal } from "../components/Modal";
 import styles from "./index.module.css";
 import { Button } from "../components/Button";
@@ -32,45 +31,13 @@ export const isChangedValue = (defaultValues: KeyObject, currentValues: KeyObjec
   return Object.keys(diffValues).length !== 0
 }
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 const Input = () => {
   const router = useRouter();
-  const isSubmit = useRef<boolean>(false);
-  const initInputForm = useRef<KeyObject>({})
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
- const [isDiscardOpen, setIsDiscardOpen] = useState<boolean>(false);
-  const pathname = usePathname();
 
   const methods = useForm<inputForm>({
     mode: "onBlur"
   })
-
-  const { data, error } = useSWRImmutable(`https://jsonplaceholder.typicode.com/posts/1`, fetcher)
-
-  /**
-   * 破棄確認モーダルでsubmitしたときの処理
-   */
-  const discardNextPage = (nextUrl: string) => {
-    router.push(nextUrl)
-  }
-
-  /**
-   * 入力項目の値を変更後に画面遷移をしようとした場合、
-   * 遷移を停止して破棄確認を表示する
-   */
-  useEffect(() => {
-    if (isSubmit.current || !methods.formState.isDirty) {
-      // submit時は破棄確認せずに遷移を続行させる
-      return;
-    }
-    if (!isChangedValue(initInputForm.current, methods.watch())) {
-      // 自画面の再描画or初期値から値が変更されていない場合は、破棄確認をせずに遷移を続行させる
-      return;
-    }
-    setIsDiscardOpen(true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname])
 
   const onSubmit = (data: inputForm) => {
    setIsModalOpen(true)
@@ -111,13 +78,8 @@ const Input = () => {
           setIsModalOpen={setIsModalOpen}
           text="登録しますか？"
           onClick={() => onSubmitComplete(methods.getValues())}
-        ></Modal>)}
-      {isDiscardOpen && (
-        <Modal 
-          setIsModalOpen={setIsModalOpen}
-          text="破棄しますか?"
-          onClick={() => discardNextPage(pathname)}
-        ></Modal>)}
+        ></Modal>)
+      }
     </>
   )
 }
