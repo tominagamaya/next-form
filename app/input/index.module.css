@@ -1,6 +1,7 @@
 .container {
-  height: 220px;
+  margin-top: 20px;
 }
+
 .title {
   font-weight: bold;
   font-size: var(--title-text-size);
@@ -9,14 +10,22 @@
 .subText {
   color: var(--sub-text-color);
   font-size: var(--sub-text-size);
-  margin-top: 10px;
+  margin: 10px 0;
 }
 
 .nameContents {
-  height: 100px
+  height: 60px;
+
+  @media screen and (min-width: 600px) {
+    height: 100px;
+  }
 }
 
 .buttonContents {
   margin-top: 30px;
   text-align: center;
+
+  @media screen and (min-width: 600px) {
+    padding-top: 40px;
+  }
 }

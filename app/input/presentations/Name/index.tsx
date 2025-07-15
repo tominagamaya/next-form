@@ -9,16 +9,16 @@ export const Name = () => {
   return (
     <>
       <div className={styles.inputContainer}>
-        <InputText 
+        <InputText
           placeholder={"苗字"}
           errorMessage={errors.lastName && errors.lastName.message}
-          {...register("lastName", { required: "苗字を入力してください" })}
-          />
-        <InputText 
+          {...register("lastName", { required: "苗字は必須です" })}
+        />
+        <InputText
           placeholder={"名前"}
-          errorMessage={errors.lastName && errors.lastName.message}
-          {...register("firstName", { required: "名前を入力してください" })}
-          />
+          errorMessage={errors.firstName && errors.firstName.message}
+          {...register("firstName", { required: "名前は必須です" })}
+        />
       </div>
     </>
   )

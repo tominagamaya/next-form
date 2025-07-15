@@ -6,9 +6,9 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
- 
+
   --error-color: #da3c41;
-  --input-color: #aaaaaa;
+  --input-color: #060606;
   --input-border-color: #1b2538;
 
   --sub-text-color: #767171a3;
@@ -26,7 +26,7 @@
 }
 
 body {
-  padding: 10px 20px;
+  padding: 0 20px 10px;
 }
 
 @layer utilities {

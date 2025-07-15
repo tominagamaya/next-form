@@ -40,7 +40,7 @@ const Input = () => {
   })
 
   const onSubmit = (data: inputForm) => {
-   setIsModalOpen(true)
+    setIsModalOpen(true)
   }
 
   /**
@@ -48,7 +48,7 @@ const Input = () => {
    */
   async function postData(data: inputForm) {
     await fetch(`/api/input?firstName=${data.firstName}&lastName=${data.lastName}`);
-  } 
+  }
 
   const onSubmitComplete = (data: inputForm) => {
     postData(data);
@@ -74,7 +74,7 @@ const Input = () => {
         </form>
       </FormProvider>
       {isModalOpen && (
-        <Modal 
+        <Modal
           setIsModalOpen={setIsModalOpen}
           text="登録しますか？"
           onClick={() => onSubmitComplete(methods.getValues())}

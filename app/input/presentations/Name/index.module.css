@@ -1,12 +1,11 @@
 .inputContainer {
   display: flex;
-  padding-top: 20px;
 }
 
-@media screen and (min-width: 600px){
-	.inputContainer {
-		display: block;
-		margin: 0 auto;
-		width: 400px;
-	}
+@media screen and (min-width: 600px) {
+  .inputContainer {
+    display: block;
+    margin: 0 auto;
+    width: 400px;
+  }
 }
