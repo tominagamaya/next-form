@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Modal } from "../components/Modal";
 import styles from "./index.module.css";
 import { Button } from "../components/Button";
+import { useStore } from "./store";
 
 export type inputForm = {
   firstName: string;
@@ -34,6 +35,9 @@ export const isChangedValue = (defaultValues: KeyObject, currentValues: KeyObjec
 const Input = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const firstName = useStore((state) => state.firstName)
+  const lastName = useStore((state) => state.lastName)
+  const setText = useStore((state) => state.setText)
 
   const methods = useForm<inputForm>({
     mode: "onBlur"
@@ -52,6 +56,7 @@ const Input = () => {
 
   const onSubmitComplete = (data: inputForm) => {
     postData(data);
+    setText(data.firstName, data.lastName)
     router.push("../");
   }
   return (
@@ -62,7 +67,7 @@ const Input = () => {
             <h2 className={styles.title}>氏名入力</h2>
             <p className={styles.subText}>登録する氏名を入力してください</p>
             <div className={styles.nameContents}>
-              <Name />
+              <Name firstName={firstName} lastName={lastName} />
             </div>
           </div>
           <div className={styles.buttonContents}>
