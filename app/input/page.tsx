@@ -35,15 +35,19 @@ export const isChangedValue = (defaultValues: KeyObject, currentValues: KeyObjec
 const Input = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const firstName = useStore((state) => state.firstName)
-  const lastName = useStore((state) => state.lastName)
-  const setText = useStore((state) => state.setText)
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const store = useStore();
 
   const methods = useForm<inputForm>({
     mode: "onBlur"
   })
 
   const onSubmit = (data: inputForm) => {
+    const isChanged = isChangedValue({ firstName: store.firstName, lastName: store.lastName }, data)
+    if (!isChanged) {
+      setErrorMessage("変更がありません")
+      return;
+    }
     setIsModalOpen(true)
   }
 
@@ -56,7 +60,7 @@ const Input = () => {
 
   const onSubmitComplete = (data: inputForm) => {
     postData(data);
-    setText(data.firstName, data.lastName)
+    store.setText(data.firstName, data.lastName)
     router.push("../");
   }
   return (
@@ -64,16 +68,17 @@ const Input = () => {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div className={styles.container}>
+            {errorMessage && <p className={styles.error}>{errorMessage}</p>}
             <h2 className={styles.title}>氏名入力</h2>
             <p className={styles.subText}>登録する氏名を入力してください</p>
             <div className={styles.nameContents}>
-              <Name firstName={firstName} lastName={lastName} />
+              <Name firstName={store.firstName} lastName={store.lastName} />
             </div>
           </div>
           <div className={styles.buttonContents}>
             <Button
               labelName={"確認"}
-              disabled={!methods.formState.isValid || !methods.formState.isDirty || methods.formState.isSubmitting}
+              disabled={!methods.formState.isValid || !methods.formState.isDirty || methods.formState.isSubmitting || !!errorMessage}
             />
           </div>
         </form>
