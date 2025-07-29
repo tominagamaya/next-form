@@ -8,6 +8,7 @@ import { Modal } from "../components/Modal";
 import styles from "./index.module.css";
 import { Button } from "../components/Button";
 import { useStore } from "./store";
+import { pagesPath } from "@/utils/$path";
 
 export type inputForm = {
   firstName: string;
@@ -61,7 +62,7 @@ const Input = () => {
   const onSubmitComplete = (data: inputForm) => {
     postData(data);
     store.setText(data.firstName, data.lastName)
-    router.push("../");
+    router.push(pagesPath.$url().pathname);
   }
   return (
     <>
