@@ -9,11 +9,8 @@ import styles from "./index.module.css";
 import { Button } from "../components/Button";
 import { useStore } from "./store";
 import { pagesPath } from "@/utils/$path";
-
-export type inputForm = {
-  firstName: string;
-  lastName: string;
-}
+import { formSchema, InputForm } from "./schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 /**
  * inputFormに変更があるか判定
@@ -39,11 +36,15 @@ const Input = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const store = useStore();
 
-  const methods = useForm<inputForm>({
+  const methods = useForm<InputForm>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { firstName: "", lastName: "" },
+    criteriaMode: "all",
     mode: "onBlur"
   })
+  const isValid = formSchema.safeParse(methods.getValues)
 
-  const onSubmit = (data: inputForm) => {
+  const onSubmit = (data: InputForm) => {
     const isChanged = isChangedValue({ firstName: store.firstName, lastName: store.lastName }, data)
     if (!isChanged) {
       setErrorMessage("変更がありません")
@@ -55,11 +56,11 @@ const Input = () => {
   /**
    * 入力内容の登録処理
    */
-  async function postData(data: inputForm) {
+  async function postData(data: InputForm) {
     await fetch(`/api/input?firstName=${data.firstName}&lastName=${data.lastName}`);
   }
 
-  const onSubmitComplete = (data: inputForm) => {
+  const onSubmitComplete = (data: InputForm) => {
     postData(data);
     store.setText(data.firstName, data.lastName)
     router.push(pagesPath.$url().pathname);
@@ -79,7 +80,7 @@ const Input = () => {
           <div className={styles.buttonContents}>
             <Button
               labelName={"確認"}
-              disabled={!methods.formState.isValid || !methods.formState.isDirty || methods.formState.isSubmitting || !!errorMessage}
+              disabled={!isValid || !methods.formState.isDirty || methods.formState.isSubmitting || !!errorMessage}
             />
           </div>
         </form>

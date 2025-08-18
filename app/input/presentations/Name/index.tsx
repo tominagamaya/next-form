@@ -1,8 +1,8 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { inputForm } from "../../page";
 import styles from "./index.module.css"
 import { InputText } from "@/app/components/InputText";
+import { InputForm } from "../../schema";
 
 type NameInfo = {
   firstName: string;
@@ -10,7 +10,7 @@ type NameInfo = {
 }
 
 export const Name = ({ firstName, lastName }: NameInfo) => {
-  const { register, formState: { errors }, watch } = useFormContext<inputForm>()
+  const { register, formState: { errors }, watch } = useFormContext<InputForm>()
   return (
     <>
       <div className={styles.inputContainer}>
@@ -18,13 +18,13 @@ export const Name = ({ firstName, lastName }: NameInfo) => {
           placeholder={"苗字"}
           value={watch("lastName") ?? lastName}
           errorMessage={errors.lastName && errors.lastName.message}
-          {...register("lastName", { required: "苗字は必須です" })}
+          {...register("lastName")}
         />
         <InputText
           placeholder={"名前"}
           value={watch("firstName") ?? firstName}
           errorMessage={errors.firstName && errors.firstName.message}
-          {...register("firstName", { required: "名前は必須です" })}
+          {...register("firstName")}
         />
       </div>
     </>
